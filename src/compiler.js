@@ -1,7 +1,7 @@
-import { splice } from './util';
-import { TOKEN_TYPE, NUMBER } from './constants';
+import { NUMBER, TOKEN_TYPE } from "./constants.js";
+import { splice } from "./util.js";
 
-const getNumber = region => {
+const getNumber = (region) => {
   let sum = 0;
   let decimalReached = false;
   let decimalUnits = [];
@@ -21,35 +21,44 @@ const getNumber = region => {
       case TOKEN_TYPE.HUNDRED: {
         subRegionSum = 1;
         const tokensCount = tokens.length;
-        tokens.reduce((acc, token, i) => {
-          if (token.type === TOKEN_TYPE.HUNDRED) {
-            let tokensToAdd = tokensCount - 1 ? tokens.slice(i + 1) : [];
-            tokensToAdd = tokensToAdd.filter((tokenToAdd, j) =>
-              j === 0 || tokensToAdd[j - 1].type > tokenToAdd.type
-            );
-            const tokensToAddSum = tokensToAdd.reduce((acc2, tokenToAdd) =>
-                acc2 + NUMBER[tokenToAdd.lowerCaseValue]
-            , 0);
+        tokens
+          .reduce((acc, token, i) => {
+            if (token.type === TOKEN_TYPE.HUNDRED) {
+              let tokensToAdd = tokensCount - 1 ? tokens.slice(i + 1) : [];
+              tokensToAdd = tokensToAdd.filter(
+                (tokenToAdd, j) =>
+                  j === 0 || tokensToAdd[j - 1].type > tokenToAdd.type
+              );
+              const tokensToAddSum = tokensToAdd.reduce(
+                (acc2, tokenToAdd) => acc2 + NUMBER[tokenToAdd.lowerCaseValue],
+                0
+              );
+              return acc.concat({
+                ...tokens[i + 1],
+                numberValue:
+                  tokensToAddSum + NUMBER[token.lowerCaseValue] * 100,
+              });
+            }
+            if (i > 0 && tokens[i - 1].type === TOKEN_TYPE.HUNDRED) return acc;
+            if (
+              i > 1 &&
+              tokens[i - 1].type === TOKEN_TYPE.TEN &&
+              tokens[i - 2].type === TOKEN_TYPE.HUNDRED
+            )
+              return acc;
             return acc.concat({
-              ...tokens[i + 1],
-              numberValue: tokensToAddSum + (NUMBER[token.lowerCaseValue] * 100),
+              token,
+              numberValue: NUMBER[token.lowerCaseValue],
             });
-          }
-          if (i > 0 && tokens[i - 1].type === TOKEN_TYPE.HUNDRED) return acc;
-          if (
-            i > 1 &&
-            tokens[i - 1].type === TOKEN_TYPE.TEN &&
-            tokens[i - 2].type === TOKEN_TYPE.HUNDRED
-          ) return acc;
-          return acc.concat({ token, numberValue: NUMBER[token.lowerCaseValue] });
-        }, []).forEach(({ numberValue }) => {
-          subRegionSum *= numberValue;
-        });
+          }, [])
+          .forEach(({ numberValue }) => {
+            subRegionSum *= numberValue;
+          });
         break;
       }
       case TOKEN_TYPE.UNIT:
       case TOKEN_TYPE.TEN: {
-        tokens.forEach(token => {
+        tokens.forEach((token) => {
           subRegionSum += NUMBER[token.lowerCaseValue];
         });
         break;
@@ -73,7 +82,7 @@ const getNumber = region => {
 const replaceRegionsInText = (regions, text) => {
   let replaced = text;
   let offset = 0;
-  regions.forEach(region => {
+  regions.forEach((region) => {
     const length = region.end - region.start + 1;
     const replaceWith = `${getNumber(region)}`;
     replaced = splice(replaced, region.start + offset, length, replaceWith);
@@ -84,6 +93,7 @@ const replaceRegionsInText = (regions, text) => {
 
 export default ({ regions, text }) => {
   if (!regions) return text;
-  if (regions[0].end - regions[0].start === text.length - 1) return getNumber(regions[0]);
+  if (regions[0].end - regions[0].start === text.length - 1)
+    return getNumber(regions[0]);
   return replaceRegionsInText(regions, text);
 };

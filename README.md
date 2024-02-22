@@ -1,14 +1,28 @@
 # Words To Numbers
 
-> This repository is forked from [words-from-numbers](https://github.com/finnfiddle/words-to-numbers) because that project seems abandoned. This fork fixes the manifest so that it can be used in modern code without issues. The dependencies are still very old and have lots of vulnerabilities so I plan to give it a major overhaul soon.
+This repository was forked from
+[words-from-numbers](https://github.com/finnfiddle/words-to-numbers) because the
+project seems abandoned. This fork:
 
-Convert words to numbers. Optionally fuzzy match the words to numbers.
+- Fixes the manifest and makes it a pure ESM package
+- Removes old dependencies and Babel transpilation
+- Uses Vitest to replace old testing tools
+- Upgrades clj-fuzzy to latest version
+- Add prettier formatting
+- Replace NPM with PNPM
+- Add basis for Typescript conversion
+
+I might convert the code to Typescript later. PRs are welcome.
+
+## Usage
 
 ```
 npm install words-to-numbers
 ```
 
-If the whole string passed is a number then it will return a `Number` type otherwise it will return the original string with all instances of numbers replaced.
+If the whole string passed is a number then it will return a `Number` type
+otherwise it will return the original string with all instances of numbers
+replaced.
 
 TODO: Add functionality for parsing mixed numbers and words. PRs welcome.
 
@@ -43,7 +57,10 @@ wordsToNumbers('there were twenty-thousand, five-hundred and sixty-nine X in the
 
 ## With Fuzzy Matching
 
-Uses [Jaro distance](http://yomguithereal.github.io/clj-fuzzy/javascript.html#jaro) to find the best match for the number words. Don't rely on this being completely accurate...
+Uses
+[Jaro distance](http://yomguithereal.github.io/clj-fuzzy/javascript.html#jaro)
+to find the best match for the number words. Don't rely on this being completely
+accurate...
 
 ```javascript
 import wordsToNumbers from "words-to-numbers";
@@ -79,13 +96,6 @@ wordsToNumbers("ninety sixth"); //96
 wordsToNumbers("one hundred and eighth"); //108
 wordsToNumbers("one hundred and tenth"); //110
 wordsToNumbers("one hundred and ninety ninth"); //199
-```
-
-## Commonjs
-
-```javascript
-const { wordsToNumbers } = require("words-to-numbers");
-wordsToNumbers("one hundred"); //100;
 ```
 
 ## Implied Hundreds

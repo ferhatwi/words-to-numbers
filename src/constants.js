@@ -1,4 +1,3 @@
-
 export const UNIT = {
   zero: 0,
   first: 1,
@@ -83,35 +82,35 @@ export const UNIT_KEYS = Object.keys(UNIT);
 export const TEN_KEYS = Object.keys(TEN);
 export const MAGNITUDE_KEYS = Object.keys(MAGNITUDE);
 
-export const NUMBER_WORDS = [ ...UNIT_KEYS, ...TEN_KEYS, ...MAGNITUDE_KEYS];
+export const NUMBER_WORDS = [...UNIT_KEYS, ...TEN_KEYS, ...MAGNITUDE_KEYS];
 
-export const JOINERS = ['and'];
-export const DECIMALS = ['point', 'dot'];
+export const JOINERS = ["and"];
+export const DECIMALS = ["point", "dot"];
 
 export const PUNCTUATION = [
-  '.',
-  ',',
-  '\\',
-  '#',
-  '!',
-  '$',
-  '%',
-  '^',
-  '&',
-  '/',
-  '*',
-  ';',
-  ':',
-  '{',
-  '}',
-  '=',
-  '-',
-  '_',
-  '`',
-  '~',
-  '(',
-  ')',
-  ' ',
+  ".",
+  ",",
+  "\\",
+  "#",
+  "!",
+  "$",
+  "%",
+  "^",
+  "&",
+  "/",
+  "*",
+  ";",
+  ":",
+  "{",
+  "}",
+  "=",
+  "-",
+  "_",
+  "`",
+  "~",
+  "(",
+  ")",
+  " ",
 ];
 
 export const TOKEN_TYPE = {
@@ -122,6 +121,6 @@ export const TOKEN_TYPE = {
   HUNDRED: 4,
 };
 
-export const ALL_WORDS = [ ...NUMBER_WORDS, ...JOINERS, ...DECIMALS ];
+export const ALL_WORDS = [...NUMBER_WORDS, ...JOINERS, ...DECIMALS];
 
-export const BLACKLIST_SINGULAR_WORDS = ['a'];
+export const BLACKLIST_SINGULAR_WORDS = ["a"];

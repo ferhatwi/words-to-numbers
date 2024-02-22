@@ -6,5 +6,5 @@ export const splice = (str, index, count, add) => {
       i = 0;
     }
   }
-  return str.slice(0, i) + (add || '') + str.slice(i + count);
+  return str.slice(0, i) + (add || "") + str.slice(i + count);
 };

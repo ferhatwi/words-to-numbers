@@ -1,7 +1,7 @@
-import parser from './parser';
-import compiler from './compiler';
+import compiler from "./compiler.js";
+import parser from "./parser.js";
 
-export function wordsToNumbers (text, options = {}) {
+export function wordsToNumbers(text, options = {}) {
   const regions = parser(text, options);
   if (!regions.length) return text;
   const compiled = compiler({ text, regions });

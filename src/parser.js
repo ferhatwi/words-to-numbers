@@ -1,70 +1,83 @@
 /* eslint-disable no-extra-parens */
 import {
-  PUNCTUATION,
-  NUMBER_WORDS,
-  UNIT_KEYS,
-  TEN_KEYS,
-  MAGNITUDE_KEYS,
-  TOKEN_TYPE,
-  JOINERS,
-  DECIMALS,
   BLACKLIST_SINGULAR_WORDS,
+  DECIMALS,
+  JOINERS,
+  MAGNITUDE_KEYS,
   NUMBER,
-} from './constants';
-import fuzzyMatch from './fuzzy';
+  NUMBER_WORDS,
+  PUNCTUATION,
+  TEN_KEYS,
+  TOKEN_TYPE,
+  UNIT_KEYS,
+} from "./constants.js";
+import fuzzyMatch from "./fuzzy.js";
 
 const SKIP = 0;
 const ADD = 1;
 const START_NEW_REGION = 2;
 const NOPE = 3;
 
-const canAddTokenToEndOfSubRegion = (subRegion, currentToken, { impliedHundreds }) => {
+const canAddTokenToEndOfSubRegion = (
+  subRegion,
+  currentToken,
+  { impliedHundreds }
+) => {
   const { tokens } = subRegion;
   const prevToken = tokens[0];
   if (!prevToken) return true;
   if (
     prevToken.type === TOKEN_TYPE.MAGNITUDE &&
     currentToken.type === TOKEN_TYPE.UNIT
-  ) return true;
+  )
+    return true;
   if (
     prevToken.type === TOKEN_TYPE.MAGNITUDE &&
     currentToken.type === TOKEN_TYPE.TEN
-  ) return true;
+  )
+    return true;
   if (
     impliedHundreds &&
     subRegion.type === TOKEN_TYPE.MAGNITUDE &&
     prevToken.type === TOKEN_TYPE.TEN &&
     currentToken.type === TOKEN_TYPE.UNIT
-  ) return true;
+  )
+    return true;
   if (
     impliedHundreds &&
     subRegion.type === TOKEN_TYPE.MAGNITUDE &&
     prevToken.type === TOKEN_TYPE.UNIT &&
     currentToken.type === TOKEN_TYPE.TEN
-  ) return true;
+  )
+    return true;
   if (
     prevToken.type === TOKEN_TYPE.TEN &&
     currentToken.type === TOKEN_TYPE.UNIT
-  ) return true;
+  )
+    return true;
   if (
     !impliedHundreds &&
     prevToken.type === TOKEN_TYPE.TEN &&
     currentToken.type === TOKEN_TYPE.UNIT
-  ) return true;
+  )
+    return true;
   if (
     prevToken.type === TOKEN_TYPE.MAGNITUDE &&
     currentToken.type === TOKEN_TYPE.MAGNITUDE
-  ) return true;
+  )
+    return true;
   if (
     !impliedHundreds &&
     prevToken.type === TOKEN_TYPE.TEN &&
     currentToken.type === TOKEN_TYPE.TEN
-  ) return false;
+  )
+    return false;
   if (
     impliedHundreds &&
     prevToken.type === TOKEN_TYPE.TEN &&
     currentToken.type === TOKEN_TYPE.TEN
-  ) return true;
+  )
+    return true;
   return false;
 };
 
@@ -73,17 +86,21 @@ const getSubRegionType = (subRegion, currentToken) => {
     return { type: currentToken.type };
   }
   const prevToken = subRegion.tokens[0];
-  const isHundred = (
-    (prevToken.type === TOKEN_TYPE.TEN && currentToken.type === TOKEN_TYPE.UNIT) ||
-    (prevToken.type === TOKEN_TYPE.TEN && currentToken.type === TOKEN_TYPE.TEN) ||
-    (
-      prevToken.type === TOKEN_TYPE.UNIT && currentToken.type === TOKEN_TYPE.TEN &&
-      NUMBER[prevToken.lowerCaseValue] > 9
-    ) ||
-    (prevToken.type === TOKEN_TYPE.UNIT && currentToken.type === TOKEN_TYPE.UNIT) ||
-    (prevToken.type === TOKEN_TYPE.TEN && currentToken.type === TOKEN_TYPE.UNIT && subRegion.type === TOKEN_TYPE.MAGNITUDE)
-  );
-  if (subRegion.type === TOKEN_TYPE.MAGNITUDE) return { type: TOKEN_TYPE.MAGNITUDE, isHundred };
+  const isHundred =
+    (prevToken.type === TOKEN_TYPE.TEN &&
+      currentToken.type === TOKEN_TYPE.UNIT) ||
+    (prevToken.type === TOKEN_TYPE.TEN &&
+      currentToken.type === TOKEN_TYPE.TEN) ||
+    (prevToken.type === TOKEN_TYPE.UNIT &&
+      currentToken.type === TOKEN_TYPE.TEN &&
+      NUMBER[prevToken.lowerCaseValue] > 9) ||
+    (prevToken.type === TOKEN_TYPE.UNIT &&
+      currentToken.type === TOKEN_TYPE.UNIT) ||
+    (prevToken.type === TOKEN_TYPE.TEN &&
+      currentToken.type === TOKEN_TYPE.UNIT &&
+      subRegion.type === TOKEN_TYPE.MAGNITUDE);
+  if (subRegion.type === TOKEN_TYPE.MAGNITUDE)
+    return { type: TOKEN_TYPE.MAGNITUDE, isHundred };
   if (isHundred) return { type: TOKEN_TYPE.HUNDRED, isHundred };
   return { type: currentToken.type, isHundred };
 };
@@ -104,7 +121,11 @@ const getSubRegions = (region, options) => {
   let i = tokensCount - 1;
   while (i >= 0) {
     const token = region.tokens[i];
-    const { action, type, isHundred } = checkIfTokenFitsSubRegion(currentSubRegion, token, options);
+    const { action, type, isHundred } = checkIfTokenFitsSubRegion(
+      currentSubRegion,
+      token,
+      options
+    );
     token.type = isHundred ? TOKEN_TYPE.HUNDRED : token.type;
     switch (action) {
       case ADD: {
@@ -127,7 +148,11 @@ const getSubRegions = (region, options) => {
   return subRegions;
 };
 
-const canAddTokenToEndOfRegion = (region, currentToken, { impliedHundreds }) => {
+const canAddTokenToEndOfRegion = (
+  region,
+  currentToken,
+  { impliedHundreds }
+) => {
   const { tokens } = region;
   const prevToken = tokens[tokens.length - 1];
   if (
@@ -135,9 +160,20 @@ const canAddTokenToEndOfRegion = (region, currentToken, { impliedHundreds }) => 
     prevToken.type === TOKEN_TYPE.UNIT &&
     currentToken.type === TOKEN_TYPE.UNIT &&
     !region.hasDecimal
-  ) return false;
-  if (!impliedHundreds && prevToken.type === TOKEN_TYPE.UNIT && currentToken.type === TOKEN_TYPE.TEN) return false;
-  if (!impliedHundreds && prevToken.type === TOKEN_TYPE.TEN && currentToken.type === TOKEN_TYPE.TEN) return false;
+  )
+    return false;
+  if (
+    !impliedHundreds &&
+    prevToken.type === TOKEN_TYPE.UNIT &&
+    currentToken.type === TOKEN_TYPE.TEN
+  )
+    return false;
+  if (
+    !impliedHundreds &&
+    prevToken.type === TOKEN_TYPE.TEN &&
+    currentToken.type === TOKEN_TYPE.TEN
+  )
+    return false;
   return true;
 };
 
@@ -164,7 +200,7 @@ const checkIfTokenFitsRegion = (region, token, options) => {
   return NOPE;
 };
 
-const checkBlacklist = tokens =>
+const checkBlacklist = (tokens) =>
   tokens.length === 1 &&
   BLACKLIST_SINGULAR_WORDS.includes(tokens[0].lowerCaseValue);
 
@@ -214,7 +250,10 @@ const matchRegions = (tokens, options) => {
     i++;
   }
 
-  return regions.map(region => ({ ...region, subRegions: getSubRegions(region, options) }));
+  return regions.map((region) => ({
+    ...region,
+    subRegions: getSubRegions(region, options),
+  }));
 };
 
 const getTokenType = (chunk) => {
@@ -225,24 +264,23 @@ const getTokenType = (chunk) => {
 };
 
 export default (text, options) => {
-  const tokens = text
-    .split(/(\w+|\s|[[:punct:]])/i)
-    .reduce((acc, chunk) => {
-      const unfuzzyChunk = chunk.length && options.fuzzy && !PUNCTUATION.includes(chunk) ?
-        fuzzyMatch(chunk) :
-        chunk;
-      const start = acc.length ? acc[acc.length - 1].end + 1 : 0;
-      const end = start + chunk.length;
-      return end !== start ?
-        acc.concat({
+  const tokens = text.split(/(\w+|\s|[[:punct:]])/i).reduce((acc, chunk) => {
+    const unfuzzyChunk =
+      chunk.length && options.fuzzy && !PUNCTUATION.includes(chunk)
+        ? fuzzyMatch(chunk)
+        : chunk;
+    const start = acc.length ? acc[acc.length - 1].end + 1 : 0;
+    const end = start + chunk.length;
+    return end !== start
+      ? acc.concat({
           start,
           end: end - 1,
           value: unfuzzyChunk,
           lowerCaseValue: unfuzzyChunk.toLowerCase(),
           type: getTokenType(unfuzzyChunk, options),
-        }) :
-        acc;
-    }, []);
+        })
+      : acc;
+  }, []);
   const regions = matchRegions(tokens, options);
   return regions;
 };
