@@ -2,6 +2,9 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Default",
   "compilerOptions": {
+    "noEmit": true,
+    "outDir": "dist",
+    "baseUrl": ".",
     "target": "es2022",
     "composite": false,
     "esModuleInterop": false,
@@ -15,7 +18,7 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "checkJs": true,
-    "strict": true
+    "strict": false // enable when code is converted to TS
   },
   "include": ["src"]
 }

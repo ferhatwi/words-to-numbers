@@ -1,4 +1,3 @@
-/* eslint-disable no-extra-parens */
 import {
   BLACKLIST_SINGULAR_WORDS,
   DECIMALS,
@@ -210,6 +209,9 @@ const matchRegions = (tokens, options) => {
   if (checkBlacklist(tokens)) return regions;
 
   let i = 0;
+  /**
+   * @type {{start: number, end: number, tokens: string[], hasDecimal?: boolean} | null}
+   */
   let currentRegion;
   const tokensCount = tokens.length;
   while (i < tokensCount) {
@@ -277,7 +279,7 @@ export default (text, options) => {
           end: end - 1,
           value: unfuzzyChunk,
           lowerCaseValue: unfuzzyChunk.toLowerCase(),
-          type: getTokenType(unfuzzyChunk, options),
+          type: getTokenType(unfuzzyChunk),
         })
       : acc;
   }, []);

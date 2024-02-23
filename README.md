@@ -2,22 +2,30 @@
 
 This repository was forked from
 [words-from-numbers](https://github.com/finnfiddle/words-to-numbers) because the
-project seems abandoned. This fork:
+project seems abandoned.
 
-- Fixes the manifest and makes it a pure ESM package
-- Removes old dependencies and Babel transpilation
-- Uses Vitest to replace old testing tools
-- Upgrades clj-fuzzy to latest version
+The codebase was modernized and published under 2.0 with the following changes:
+
+- Fix the invalid package manifest
+- Remove transpilation and make it
+  [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c)
+- Add Typescript
+  [type inference](https://www.typescriptlang.org/docs/handbook/intro-to-js-ts.html)
+- Remove obsolete and old dependencies
+- Use Vitest to replace older testing tools
+- Upgrade clj-fuzzy to latest version
 - Add prettier formatting
-- Replace NPM with PNPM
-- Add basis for Typescript conversion
 
-I might convert the code to Typescript later. PRs are welcome.
+I might convert the code to Typescript later, but the code quality is pretty bad
+and I am not sure it's worth it. PRs are welcome.
+
+I have also replaced NPM with PNPM, which was unnecessary but just personal
+preference.
 
 ## Usage
 
 ```
-npm install words-to-numbers
+(p)npm install words-to-numbers
 ```
 
 If the whole string passed is a number then it will return a `Number` type
