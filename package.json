@@ -1,7 +1,7 @@
 {
   "name": "@codecompose/words-to-numbers",
   "description": "Convert textual words to numbers with optional fuzzy text matching",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "MIT",
   "type": "module",
   "main": "./src/index.js",
