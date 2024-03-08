@@ -15,6 +15,7 @@ The codebase was modernized and published under 2.0 with the following changes:
 - Use Vitest to replace older testing tools
 - Upgrade clj-fuzzy to latest version
 - Add prettier formatting
+- Use PNPM as package manager
 
 I might convert the code to Typescript later, but the code quality is pretty bad
 and I am not sure it's worth it. PRs are welcome.
@@ -25,7 +26,7 @@ preference.
 ## Usage
 
 ```
-(p)npm install words-to-numbers
+npm install @codecompose/words-to-numbers
 ```
 
 If the whole string passed is a number then it will return a `Number` type
