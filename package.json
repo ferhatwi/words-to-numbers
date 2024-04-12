@@ -1,6 +1,6 @@
 {
-  "name": "@codecompose/words-to-numbers",
-  "description": "Convert textual words to numbers with optional fuzzy text matching",
+  "name": "@ferhatwi/words-to-numbers",
+  "description": "Convert textual words to numbers with optional fuzzy text matching | Forked from https://github.com/0x80/words-to-numbers.git",
   "version": "2.0.1",
   "license": "MIT",
   "type": "module",
@@ -25,7 +25,7 @@
   "author": "Finn Fitzsimons <hello@finn.works>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/0x80/words-to-numbers.git"
+    "url": "https://github.com/ferhatwi/words-to-numbers.git"
   },
   "dependencies": {
     "clj-fuzzy": "^0.4.1",
