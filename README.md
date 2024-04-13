@@ -12,7 +12,7 @@ The codebase was updated under 2.1 with the following changes:
 ## Usage
 
 ```
-npm install @ferhatwi/words-to-numbers
+npm install ferhatwi/words-to-numbers
 ```
 
 If the whole string passed is a number then it will return a `Number` type
