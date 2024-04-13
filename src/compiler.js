@@ -35,8 +35,7 @@ const getNumber = (region) => {
               );
               return acc.concat({
                 ...tokens[i + 1],
-                numberValue:
-                  tokensToAddSum + NUMBER[token.lowerCaseValue] * 100,
+                numberValue: tokensToAddSum + NUMBER[token.lowerCaseValue] * 100
               });
             }
             if (i > 0 && tokens[i - 1].type === TOKEN_TYPE.HUNDRED) return acc;
@@ -48,7 +47,7 @@ const getNumber = (region) => {
               return acc;
             return acc.concat({
               token,
-              numberValue: NUMBER[token.lowerCaseValue],
+              numberValue: NUMBER[token.lowerCaseValue]
             });
           }, [])
           .forEach(({ numberValue }) => {

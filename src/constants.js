@@ -38,7 +38,7 @@ export const UNIT = {
   eleven: 11,
   twelfth: 12,
   twelve: 12,
-  a: 1,
+  a: 1
 };
 
 export const TEN = {
@@ -57,7 +57,7 @@ export const TEN = {
   eighty: 80,
   eightieth: 80,
   ninety: 90,
-  ninetieth: 90,
+  ninetieth: 90
 };
 
 export const MAGNITUDE = {
@@ -73,7 +73,7 @@ export const MAGNITUDE = {
   septillion: 1000000000000000000000000,
   octillion: 1000000000000000000000000000,
   nonillion: 1000000000000000000000000000000,
-  decillion: 1000000000000000000000000000000000,
+  decillion: 1000000000000000000000000000000000
 };
 
 export const NUMBER = { ...UNIT, ...TEN, ...MAGNITUDE };
@@ -110,7 +110,7 @@ export const PUNCTUATION = [
   "~",
   "(",
   ")",
-  " ",
+  " "
 ];
 
 export const TOKEN_TYPE = {
@@ -118,7 +118,7 @@ export const TOKEN_TYPE = {
   TEN: 1,
   MAGNITUDE: 2,
   DECIMAL: 3,
-  HUNDRED: 4,
+  HUNDRED: 4
 };
 
 export const ALL_WORDS = [...NUMBER_WORDS, ...JOINERS, ...DECIMALS];

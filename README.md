@@ -1,32 +1,18 @@
 # Words To Numbers
 
 This repository was forked from
-[words-from-numbers](https://github.com/finnfiddle/words-to-numbers) because the
-project seems abandoned.
+[words-from-numbers](https://github.com/0x80/words-to-numbers) because the
+project seems not to be continued.
 
-The codebase was modernized and published under 2.0 with the following changes:
+The codebase was updated under 2.1 with the following changes:
 
-- Fix the invalid package manifest
-- Remove transpilation and make it
-  [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c)
-- Add Typescript
-  [type inference](https://www.typescriptlang.org/docs/handbook/intro-to-js-ts.html)
-- Remove obsolete and old dependencies
-- Use Vitest to replace older testing tools
-- Upgrade clj-fuzzy to latest version
-- Add prettier formatting
-- Use PNPM as package manager
-
-I might convert the code to Typescript later, but the code quality is pretty bad
-and I am not sure it's worth it. PRs are welcome.
-
-I have also replaced NPM with PNPM, which was unnecessary but just personal
-preference.
+- Migrated clj-fuzzy to talisman
+- Removed eslint-config-0x80
 
 ## Usage
 
 ```
-npm install @codecompose/words-to-numbers
+npm install @ferhatwi/words-to-numbers
 ```
 
 If the whole string passed is a number then it will return a `Number` type
@@ -66,9 +52,8 @@ wordsToNumbers('there were twenty-thousand, five-hundred and sixty-nine X in the
 
 ## With Fuzzy Matching
 
-Uses
-[Jaro distance](http://yomguithereal.github.io/clj-fuzzy/javascript.html#jaro)
-to find the best match for the number words. Don't rely on this being completely
+Uses [Jaro distance](https://yomguithereal.github.io/talisman/metrics/#jaro) to
+find the best match for the number words. Don't rely on this being completely
 accurate...
 
 ```javascript

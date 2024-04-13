@@ -1,8 +1,0 @@
-{
-  "extends": [
-    "0x80"
-  ],
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  }
-}

@@ -8,7 +8,7 @@ import {
   PUNCTUATION,
   TEN_KEYS,
   TOKEN_TYPE,
-  UNIT_KEYS,
+  UNIT_KEYS
 } from "./constants.js";
 import fuzzyMatch from "./fuzzy.js";
 
@@ -135,7 +135,7 @@ const getSubRegions = (region, options) => {
       case START_NEW_REGION: {
         currentSubRegion = {
           tokens: [token],
-          type,
+          type
         };
         subRegions.unshift(currentSubRegion);
         break;
@@ -235,7 +235,7 @@ const matchRegions = (tokens, options) => {
         currentRegion = {
           start: token.start,
           end: token.end,
-          tokens: [token],
+          tokens: [token]
         };
         regions.push(currentRegion);
         if (token.type === TOKEN_TYPE.DECIMAL) {
@@ -254,7 +254,7 @@ const matchRegions = (tokens, options) => {
 
   return regions.map((region) => ({
     ...region,
-    subRegions: getSubRegions(region, options),
+    subRegions: getSubRegions(region, options)
   }));
 };
 
@@ -279,7 +279,7 @@ export default (text, options) => {
           end: end - 1,
           value: unfuzzyChunk,
           lowerCaseValue: unfuzzyChunk.toLowerCase(),
-          type: getTokenType(unfuzzyChunk),
+          type: getTokenType(unfuzzyChunk)
         })
       : acc;
   }, []);
