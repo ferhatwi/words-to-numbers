@@ -4,7 +4,7 @@ This repository was forked from
 [words-from-numbers](https://github.com/0x80/words-to-numbers) because the
 project seems not to be continued.
 
-The codebase was updated under 2.1 with the following changes:
+The codebase was updated with the following changes:
 
 - Migrated clj-fuzzy to talisman
 - Removed eslint-config-0x80
