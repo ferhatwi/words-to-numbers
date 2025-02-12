@@ -1,7 +1,7 @@
 {
   "name": "@ferhatwi/words-to-numbers",
   "description": "Convert textual words to numbers with optional fuzzy text matching | Forked from https://github.com/0x80/words-to-numbers.git",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "type": "module",
   "main": "./src/index.js",
