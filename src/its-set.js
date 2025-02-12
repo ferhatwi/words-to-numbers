@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import get from "lodash/get";
 
 export function itsSet(val) {
   const checkVal = (v) => typeof v !== "undefined" && v !== null;
